@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import Input from "./inputs/Input";
-import Button from "./Button";
+import Input from "../../components/inputs/Input";
+import Button from "../../components/Button";
 import AuthSocilaButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 
@@ -48,7 +48,13 @@ const AuthForm = () => {
       <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === "REGISTER" && (
-            <Input label="Name" register={register} id="name" errors={errors} />
+            <Input
+              label="Name"
+              register={register}
+              id="name"
+              errors={errors}
+              disabled={isLoading}
+            />
           )}
           <Input
             label="Email"
@@ -56,6 +62,7 @@ const AuthForm = () => {
             register={register}
             id="email"
             errors={errors}
+            disabled={isLoading}
           />
           <Input
             label="Password"
@@ -63,6 +70,7 @@ const AuthForm = () => {
             register={register}
             id="password"
             errors={errors}
+            disabled={isLoading}
           />
           <div>
             <Button disabled={isLoading} fullWidth type="submit">
@@ -85,11 +93,15 @@ const AuthForm = () => {
             <AuthSocilaButton
               icon={BsGithub}
               onClick={() => socialAction("github")}
-            />
+            >
+              Github
+            </AuthSocilaButton>
             <AuthSocilaButton
               icon={BsGoogle}
               onClick={() => socialAction("google")}
-            />
+            >
+              Google
+            </AuthSocilaButton>
           </div>
         </div>
         <div className="flex gap-2 justify-center text:sm mt-6 px-2 text-gray-500">
@@ -98,8 +110,11 @@ const AuthForm = () => {
               ? "New to Messenger?"
               : "Already have an account?"}
           </div>
-          <div onClick={toggleVariant} className="underline cursor-pointer">
-            {variant === "LOGIN" ? "Create an account" : "Log In"}
+          <div
+            onClick={toggleVariant}
+            className="underline cursor-pointer ml-2"
+          >
+            {variant === "LOGIN" ? "Create an account" : "Login"}
           </div>
         </div>
       </div>
